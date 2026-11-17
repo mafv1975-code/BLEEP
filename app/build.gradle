@@ -1,0 +1,23 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'uk.marco.roadto55'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'uk.marco.roadto55'
+        minSdk 23
+        targetSdk 34
+        versionCode 100 + Integer.parseInt(System.getenv('GITHUB_RUN_NUMBER') ?: '1')
+        versionName '2.0'
+    }
+    signingConfigs {
+        release {
+            storeFile file(System.getenv('ROAD54_KEYSTORE_PATH') ?: '../signing.p12')
+            storePassword System.getenv('ROAD54_KEYSTORE_PASSWORD')
+            keyAlias 'training'
+            keyPassword System.getenv('ROAD54_KEYSTORE_PASSWORD')
+            storeType 'PKCS12'
+        }
+    }
+    buildTypes { release { signingConfig signingConfigs.release; minifyEnabled false } }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
